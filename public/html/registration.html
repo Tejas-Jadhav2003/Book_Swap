@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration</title>
+  <link rel="stylesheet" href="css/registration.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div id="navbar"></div>
+
+  <div class="register-page">
+    <div class="reg_container">
+      <h1>Create Account</h1>
+
+      <div class="success-message" id="successMessage">
+        Registration successful! Redirecting...
+      </div>
+
+      <form id="registrationForm">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
+          <div class="error" id="fullNameError">Please enter your full name</div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email">
+          <div class="error" id="emailError">Please enter a valid email address</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+          <div class="error" id="phoneError">Please enter a valid phone number</div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Create a password">
+          </div>
+          <div class="error" id="passwordError">Password must be at least 8 characters</div>
+        </div>
+
+        <button type="submit" class="submit-btn">Create Account</button>
+      </form>
+
+      <div class="login-link">
+        Already have an account? <a href="/login">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('registrationForm');
+      const fullNameInput = document.getElementById('fullName');
+      const emailInput = document.getElementById('email');
+      const phoneInput = document.getElementById('phone');
+      const passwordInput = document.getElementById('password');
+      const successMessage = document.getElementById('successMessage');
+
+      // Helper functions for errors
+      function showError(id, msg) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.style.display = 'block';
+      }
+      function hideError(id) {
+        document.getElementById(id).style.display = 'none';
+      }
+
+      // Form submit
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // Validation
+        if (fullNameInput.value.trim() === '') {
+          showError('fullNameError', 'Please enter your full name');
+          isValid = false;
+        } else hideError('fullNameError');
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+          showError('emailError', 'Please enter a valid email');
+          isValid = false;
+        } else hideError('emailError');
+
+        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+        if (!phoneRegex.test(phoneInput.value.trim())) {
+          showError('phoneError', 'Please enter a valid phone number');
+          isValid = false;
+        } else hideError('phoneError');
+
+        if (passwordInput.value.length < 8) {
+          showError('passwordError', 'Password must be at least 8 characters');
+          isValid = false;
+        } else hideError('passwordError');
+
+        // ✅ Send data to Node.js API if valid
+        if (isValid) {
+          const userData = {
+            fullName: fullNameInput.value.trim(),
+            email: emailInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            password: passwordInput.value
+          };
+
+          try {
+            const response = await fetch('/registration', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(userData)
+            });
+
+            const data = await response.json();
+            if (data.message === 'User registered successfully') {
+              successMessage.style.display = 'block';
+              successMessage.textContent = '✅ Registration successful!';
+              form.reset();
+              setTimeout(() => window.location.href = '/login', 2000);
+            } else {
+              alert(data.message || 'Registration failed.');
+            }
+          } catch (error) {
+            console.error(error);
+            alert('Server error, please try again later.');
+          }
+        }
+      });
+    });
+
+    // Load navbar
+    async function loadPartials() {
+      const navbar = await fetch('/html/partials/header.html');
+      document.getElementById('navbar').innerHTML = await navbar.text();
+    }
+    loadPartials();
+  </script>
+</body>
+
+</html>

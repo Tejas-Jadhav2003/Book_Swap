@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookSwap</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <i class="fas fa-exchange-alt"></i>
+          <span>BookSwap</span>
+        </div>
+
+        <!-- Hamburger icon for mobile -->
+        <div class="menu-toggle" id="mobileMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-links" id="navLinks">
+          <a href="/">Home</a>
+          <a href="#features">Features</a>
+          <a href="#books">Browse Books</a>
+          <a href="#how-it-works">How It Works</a>
+          <div class="auth-buttons">
+            <button class="btn btn-outline" onclick="window.location.href='/login'">Login</button>
+            <button class="btn btn-primary" onclick="window.location.href='/registration'">Register</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <script>
+  const menuToggle = document.getElementById("mobileMenu");
+  const navLinks = document.getElementById("navLinks");
+
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+
+    // Toggle icon between bars (☰) and close (×)
+    const icon = menuToggle.querySelector("i");
+    if (navLinks.classList.contains("active")) {
+      icon.classList.remove("fa-bars");
+      icon.classList.add("fa-times");
+    } else {
+      icon.classList.remove("fa-times");
+      icon.classList.add("fa-bars");
+    }
+  });
+
+  // Optional: close menu when a link is clicked
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
+      const icon = menuToggle.querySelector("i");
+      icon.classList.remove("fa-times");
+      icon.classList.add("fa-bars");
+    });
+  });
+</script>
+
+</body>
+</html>

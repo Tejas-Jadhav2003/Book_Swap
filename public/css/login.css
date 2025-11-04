@@ -1,0 +1,114 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+       background: linear-gradient(135deg, #eeeaf3 0%, #e3edff 100%); 
+    }
+
+    .login-page{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* min-height: calc(100vh - 60px);       */
+      box-sizing: border-box;
+    }
+
+    .login-card {
+      background: #fff;
+      width: 300px; /* compact width */
+      padding: 35px 30px; /* more height via padding */
+      border-radius: 14px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+      transition: 0.3s;
+    }
+
+    .login-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .login-card h2 {
+      text-align: center;
+      color: #1e3c72;
+      margin-bottom: 25px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 18px; /* a bit more spacing */
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      color: #555;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #2a5298;
+      box-shadow: 0 0 4px rgba(42, 82, 152, 0.3);
+      outline: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      background: #1e3c72;
+      color: white;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #2a5298;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 15px;
+      color: #555;
+      font-size: 13px;
+    }
+
+    .register-link a {
+      color: #1e3c72;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 400px) {
+      .login-card {
+        width: 85%;
+        padding: 25px;
+      }
+      .login-card h2 {
+        font-size: 20px;
+      }
+    }

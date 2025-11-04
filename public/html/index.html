@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Online Book Swap</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main>
+    <h1 style="text-align: center;">Welcome to Online Book Swap</h1>
+   
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Use BookSwap?</h2>
+                <p>Our platform makes book exchange simple, secure, and beneficial for everyone</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Save Money</h3>
+                    <p>Get the books you need without spending a fortune. Exchange instead of buying new.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Eco-Friendly</h3>
+                    <p>Reduce waste by reusing textbooks and novels. Help build a sustainable campus.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Build Community</h3>
+                    <p>Connect with fellow students who share your interests and academic goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How BookSwap Works</h2>
+                <p>Follow these simple steps to start exchanging books today</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Account</h3>
+                    <p>Sign up with your email and create your profile</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>List Your Books</h3>
+                    <p>Add books you're willing to exchange with details and photos</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Find & Request</h3>
+                    <p>Browse available books and send exchange requests</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Meet & Exchange</h3>
+                    <p>Coordinate a meeting on campus and complete the exchange</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    // Load Navbar & Footer dynamically
+    async function loadPartials() {
+      const navbar = await fetch('/html/partials/header.html');
+      const footer = await fetch('/html/partials/footer.html');
+      document.getElementById('navbar').innerHTML = await navbar.text();
+      document.getElementById('footer').innerHTML = await footer.text();
+    }
+    loadPartials();
+  </script>
+</body>
+</html>
