@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             min-height: calc(100vh - 60px); /* adjust for header height */
-             margin-top: 50px; /* push below header */     /* prevent overlap with sticky header */
+            margin-top: 30px; /* push below header */     /* prevent overlap with sticky header */
             box-sizing: border-box;
             
         }
@@ -23,20 +23,20 @@
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;           
             padding: 35px;      
             margin-bottom: 50px;     
         }
         
-        h1 {
+        h2 {
             color: #2b44c9;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 600;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             position: relative;
         }
         
@@ -49,7 +49,7 @@
         
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
