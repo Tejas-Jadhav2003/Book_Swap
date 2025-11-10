@@ -66,41 +66,56 @@
       const passwordInput = document.getElementById('password');
       const successMessage = document.getElementById('successMessage');
 
-      // Helper functions for errors
-      function showError(id, msg) {
+      // Helper functions
+      const showError = (id, msg) => {
         const el = document.getElementById(id);
         el.textContent = msg;
         el.style.display = 'block';
-      }
-      function hideError(id) {
-        document.getElementById(id).style.display = 'none';
-      }
+      };
 
-      // Form submit
-      form.addEventListener('submit', async function (e) {
+      const hideError = (id) => {
+        document.getElementById(id).style.display = 'none';
+      };
+
+      // Restrict phone input to digits only
+      phoneInput.addEventListener('input', () => {
+        phoneInput.value = phoneInput.value.replace(/\D/g, ''); // removes non-digits
+      });
+
+      // Restrict name input to letters only
+      fullNameInput.addEventListener('input', () => {
+        fullNameInput.value = fullNameInput.value.replace(/[^A-Za-z\s]/g, ''); // only alphabets
+      });
+
+      // Form validation
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         let isValid = true;
 
-        // Validation
-        if (fullNameInput.value.trim() === '') {
-          showError('fullNameError', 'Please enter your full name');
+        // Name validation: only letters and min 3 chars
+        const nameRegex = /^[A-Za-z\s]{3,}$/;
+        if (!nameRegex.test(fullNameInput.value.trim())) {
+          showError('fullNameError', 'Name must contain only letters and at least 3 characters');
           isValid = false;
         } else hideError('fullNameError');
 
+        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailInput.value.trim())) {
-          showError('emailError', 'Please enter a valid email');
+          showError('emailError', 'Please enter a valid email address');
           isValid = false;
         } else hideError('emailError');
 
-        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+        // Phone validation: exactly 10 digits
+        const phoneRegex = /^[0-9]{10}$/;
         if (!phoneRegex.test(phoneInput.value.trim())) {
-          showError('phoneError', 'Please enter a valid phone number');
+          showError('phoneError', 'Phone number must be exactly 10 digits');
           isValid = false;
         } else hideError('phoneError');
 
+        // Password validation: min 8 chars
         if (passwordInput.value.length < 8) {
-          showError('passwordError', 'Password must be at least 8 characters');
+          showError('passwordError', 'Password must be at least 8 characters long');
           isValid = false;
         } else hideError('passwordError');
 

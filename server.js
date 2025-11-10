@@ -2,6 +2,14 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const userRoutes = require("./routes/userRoutes");
+const session = require('express-session');
+
+app.use(session({
+  secret: "bookswap_secret_key",  // use a strong random string in production
+  resave: false,
+  saveUninitialized: false,
+  cookie: {secure: false} // set true only if using HTTPS
+}))
 
 // Middleware to handle JSON and form data
 app.use(express.json());

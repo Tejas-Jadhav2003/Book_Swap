@@ -33,42 +33,45 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Please enter email and password' });
+      return res.status(400).json({ success: false, message: 'Please enter email and password' });
     }
 
     const sql = `SELECT * FROM Users WHERE email_Id = ?`;
     db.query(sql, [email], async (err, results) => {
       if (err) {
         console.error('Error checking user:', err);
-        return res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({ success: false, message: 'Server error' });
       }
 
-      // Check if user exists
       if (results.length === 0) {
-        return res.status(401).json({ message: 'User not found' });
+        return res.status(401).json({ success: false, message: 'User not found' });
       }
 
       const user = results[0];
-
-      // Compare passwords using bcrypt
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid password' });
+        return res.status(401).json({ success: false, message: 'Invalid password' });
       }
 
-      // ✅ Successful login
-      res.status(200).json({
-        message: 'Login successful',
-        user: {
-          id: user.userId,
-          name: user.userName,
-          email: user.email_Id
-        }
+      // ✅ Create session
+      req.session.user = {
+        id: user.userId,
+        name: user.userName,
+        email: user.email_Id
+      };
+
+      console.log("✅ Session created:", req.session.user);
+
+      // ✅ Respond with JSON (not redirect)
+      return res.status(200).json({
+        success: true,
+        message: 'Login successful!',
+        redirect: '/userProfile'
       });
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 };

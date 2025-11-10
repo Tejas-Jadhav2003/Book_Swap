@@ -4,6 +4,13 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const db = require("../config/dbConfig"); // ✅ Import DB connection
 const bcrypt = require("bcrypt");
+const authMiddleware = require('../middleware/authMiddleware')
+
+
+// ✅ Protected Route
+router.get("/userProfile", authMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/html/userProfile.html"));
+});
 
 router.get('/test', (req, res) => {
   res.send('✅ userRoutes working!');
