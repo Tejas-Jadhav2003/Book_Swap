@@ -75,3 +75,13 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+exports.logoutUser = async (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.json({ success: false, message: "Logout failed" });
+    }
+    res.clearCookie("connect.sid");
+    return res.json({ success: true, redirect: "/login" });
+  });
+}

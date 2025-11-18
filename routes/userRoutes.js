@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const authMiddleware = require('../middleware/authMiddleware')
 
 
+
 // ✅ Protected Route
 router.get("/userProfile", authMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, "../public/html/userProfile.html"));
@@ -28,6 +29,9 @@ router.get("/login", (req, res)=>{
 // ✅ Login route
 router.post('/login', userController.loginUser);
 
+router.get("/logout", userController.logoutUser);
+
+
 
 // ✅ GET route to serve registration page
 router.get("/registration", (_, res)=>{
@@ -36,5 +40,18 @@ router.get("/registration", (_, res)=>{
 
 // API route (form submission)
 router.post("/registration", userController.registerUser);
+
+// user session 
+router.get('/session-user', (req, res) => {
+    if (req.session.user) {
+        return res.json({
+            loggedIn: true,
+            user: req.session.user
+        });
+    }
+
+    res.json({ loggedIn: false });
+});
+
 
 module.exports = router;
