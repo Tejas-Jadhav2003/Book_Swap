@@ -21,15 +21,15 @@
         </div>
         
         <div class="nav-links">
-            <a href="#" class="nav-item active" data-page="home">
+            <a href="/" class="nav-item " data-page="home">
                 <span class="nav-icon"><i class="fas fa-home"></i></span>
                 <span>Home</span>
             </a>
-            <a href="#" class="nav-item" data-page="profile">
+            <a href="#" class="nav-item active" data-page="profile">
                 <span class="nav-icon"><i class="fas fa-user"></i></span>
                 <span>Profile</span>
             </a>
-            <a href="#" class="nav-item" data-page="my-books">
+            <a href="/mybook" class="nav-item" data-page="my-books">
                 <span class="nav-icon"><i class="fas fa-book"></i></span>
                 <span>My Books</span>
             </a>
@@ -157,31 +157,32 @@
 
     <script>
         // Sidebar navigation functionality
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all items
-                document.querySelectorAll('.nav-item').forEach(nav => {
-                    nav.classList.remove('active');
-                });
-                
-                // Add active class to clicked item
-                this.classList.add('active');
-                
-                // In a real app, you would load the appropriate content here
-                const page = this.getAttribute('data-page');
-                console.log(`Navigating to: ${page}`);
-                
-                // Show a simple alert for logout
-                if (this.id === 'logout-btn') {
-                    if (confirm('Are you sure you want to logout?')) {
-                        alert('Logging out...');
-                        // In a real app, you would redirect to login page
-                    }
-                }
-            });
+       document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function (e) {
+
+        // Allow normal navigation for all items except logout
+        if (this.id === "logout-btn") {
+            e.preventDefault();  // only logout stays prevented
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = "/logout";
+            }
+            return;
+        }
+
+        // Remove active class from all
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
         });
+
+        // Add active class to clicked item
+        this.classList.add('active');
+
+        // ALLOW the browser to navigate normally to href=""
+        //  ❌ Do NOT block navigation
+    });
+});
+
+        
         
         // Simple animation for cards on load
         document.addEventListener('DOMContentLoaded', function() {
@@ -214,16 +215,16 @@
         })
 
         fetch("/session-user")
-  .then(res => res.json())
-  .then(data => {
-    if (data.loggedIn) {
-      document.getElementById("welcome-text").textContent =
-        "Welcome back, " + data.user.name;
-    } else {
-      window.location.href = "/login";
-    }
-  })
-  .catch(err => console.error("Error:", err));
+        .then(res => res.json())
+        .then(data => {
+         if (data.loggedIn) {
+           document.getElementById("welcome-text").textContent =
+          "Welcome back, " + data.user.name;
+         } else {
+           window.location.href = "/login";
+         }
+        })
+        .catch(err => console.error("Error:", err));
     </script>
 </body>
 </html>

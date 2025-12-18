@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const userRoutes = require("./routes/userRoutes");
+const bookRoutes = require("./routes/bookRoutes");
 const session = require('express-session');
 
 app.use(session({
@@ -15,8 +16,7 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files (CSS, HTML, JS, Images)
-app.use(express.static('public'));
+
 
 // Default route → redirect to homepage
 app.get('/', (req, res) => {
@@ -25,7 +25,10 @@ app.get('/', (req, res) => {
 
 // ✅ Use routes
 app.use("/", userRoutes);
+app.use("/", bookRoutes);
 
+// Serve static files (CSS, HTML, JS, Images)
+app.use(express.static('public'));
 
 // Start the server
 const PORT = 3000;
